@@ -1,0 +1,321 @@
+{
+  "cases": [
+    {
+      "name": "published_test_vector",
+      "secret": "brsig_00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff",
+      "signature_header": "t=1700000000,v1=bbc9e13024abefb01b0cba3e34e5399bf159a3354dbb65fd110d566e0bb8b7cf",
+      "delivery_id": "7a1c44e0-93b2-4f6d-8e15-02d9b3c7a6f4",
+      "now": 1700000000,
+      "valid": true,
+      "body": "{\"event\":\"delivered\",\"tenant_id\":\"00000000-0000-0000-0000-000000000000\",\"envelope_id\":\"00000000-0000-0000-0000-000000000000\",\"domain\":\"example.com\"}"
+    },
+    {
+      "name": "within_default_tolerance",
+      "secret": "brsig_00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff",
+      "signature_header": "t=1700000000,v1=bbc9e13024abefb01b0cba3e34e5399bf159a3354dbb65fd110d566e0bb8b7cf",
+      "delivery_id": "7a1c44e0-93b2-4f6d-8e15-02d9b3c7a6f4",
+      "now": 1700000299,
+      "valid": true,
+      "body": "{\"event\":\"delivered\",\"tenant_id\":\"00000000-0000-0000-0000-000000000000\",\"envelope_id\":\"00000000-0000-0000-0000-000000000000\",\"domain\":\"example.com\"}"
+    },
+    {
+      "name": "at_default_tolerance_boundary",
+      "secret": "brsig_00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff",
+      "signature_header": "t=1700000000,v1=bbc9e13024abefb01b0cba3e34e5399bf159a3354dbb65fd110d566e0bb8b7cf",
+      "delivery_id": "7a1c44e0-93b2-4f6d-8e15-02d9b3c7a6f4",
+      "now": 1700000300,
+      "valid": true,
+      "body": "{\"event\":\"delivered\",\"tenant_id\":\"00000000-0000-0000-0000-000000000000\",\"envelope_id\":\"00000000-0000-0000-0000-000000000000\",\"domain\":\"example.com\"}"
+    },
+    {
+      "name": "expired_past_default_tolerance",
+      "secret": "brsig_00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff",
+      "signature_header": "t=1700000000,v1=bbc9e13024abefb01b0cba3e34e5399bf159a3354dbb65fd110d566e0bb8b7cf",
+      "delivery_id": "7a1c44e0-93b2-4f6d-8e15-02d9b3c7a6f4",
+      "now": 1700000301,
+      "valid": false,
+      "body": "{\"event\":\"delivered\",\"tenant_id\":\"00000000-0000-0000-0000-000000000000\",\"envelope_id\":\"00000000-0000-0000-0000-000000000000\",\"domain\":\"example.com\"}"
+    },
+    {
+      "name": "future_timestamp_past_default_tolerance",
+      "secret": "brsig_00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff",
+      "signature_header": "t=1700000000,v1=bbc9e13024abefb01b0cba3e34e5399bf159a3354dbb65fd110d566e0bb8b7cf",
+      "delivery_id": "7a1c44e0-93b2-4f6d-8e15-02d9b3c7a6f4",
+      "now": 1699999699,
+      "valid": false,
+      "body": "{\"event\":\"delivered\",\"tenant_id\":\"00000000-0000-0000-0000-000000000000\",\"envelope_id\":\"00000000-0000-0000-0000-000000000000\",\"domain\":\"example.com\"}"
+    },
+    {
+      "name": "future_timestamp_within_default_tolerance",
+      "secret": "brsig_00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff",
+      "signature_header": "t=1700000000,v1=bbc9e13024abefb01b0cba3e34e5399bf159a3354dbb65fd110d566e0bb8b7cf",
+      "delivery_id": "7a1c44e0-93b2-4f6d-8e15-02d9b3c7a6f4",
+      "now": 1699999701,
+      "valid": true,
+      "body": "{\"event\":\"delivered\",\"tenant_id\":\"00000000-0000-0000-0000-000000000000\",\"envelope_id\":\"00000000-0000-0000-0000-000000000000\",\"domain\":\"example.com\"}"
+    },
+    {
+      "name": "custom_tolerance_accepts_older",
+      "secret": "brsig_00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff",
+      "signature_header": "t=1700000000,v1=bbc9e13024abefb01b0cba3e34e5399bf159a3354dbb65fd110d566e0bb8b7cf",
+      "delivery_id": "7a1c44e0-93b2-4f6d-8e15-02d9b3c7a6f4",
+      "now": 1700000500,
+      "valid": true,
+      "body": "{\"event\":\"delivered\",\"tenant_id\":\"00000000-0000-0000-0000-000000000000\",\"envelope_id\":\"00000000-0000-0000-0000-000000000000\",\"domain\":\"example.com\"}",
+      "tolerance_seconds": 600
+    },
+    {
+      "name": "custom_tolerance_rejects_older",
+      "secret": "brsig_00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff",
+      "signature_header": "t=1700000000,v1=bbc9e13024abefb01b0cba3e34e5399bf159a3354dbb65fd110d566e0bb8b7cf",
+      "delivery_id": "7a1c44e0-93b2-4f6d-8e15-02d9b3c7a6f4",
+      "now": 1700000061,
+      "valid": false,
+      "body": "{\"event\":\"delivered\",\"tenant_id\":\"00000000-0000-0000-0000-000000000000\",\"envelope_id\":\"00000000-0000-0000-0000-000000000000\",\"domain\":\"example.com\"}",
+      "tolerance_seconds": 60
+    },
+    {
+      "name": "tampered_body",
+      "secret": "brsig_00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff",
+      "signature_header": "t=1700000000,v1=bbc9e13024abefb01b0cba3e34e5399bf159a3354dbb65fd110d566e0bb8b7cf",
+      "delivery_id": "7a1c44e0-93b2-4f6d-8e15-02d9b3c7a6f4",
+      "now": 1700000000,
+      "valid": false,
+      "body": "{\"event\":\"delivered\",\"tenant_id\":\"00000000-0000-0000-0000-000000000000\",\"envelope_id\":\"00000000-0000-0000-0000-000000000000\",\"domain\":\"example.com\"} "
+    },
+    {
+      "name": "wrong_delivery_id",
+      "secret": "brsig_00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff",
+      "signature_header": "t=1700000000,v1=bbc9e13024abefb01b0cba3e34e5399bf159a3354dbb65fd110d566e0bb8b7cf",
+      "delivery_id": "00000000-0000-0000-0000-000000000000",
+      "now": 1700000000,
+      "valid": false,
+      "body": "{\"event\":\"delivered\",\"tenant_id\":\"00000000-0000-0000-0000-000000000000\",\"envelope_id\":\"00000000-0000-0000-0000-000000000000\",\"domain\":\"example.com\"}"
+    },
+    {
+      "name": "wrong_secret",
+      "secret": "brsig_0000000000000000000000000000000000000000000000000000000000000000",
+      "signature_header": "t=1700000000,v1=bbc9e13024abefb01b0cba3e34e5399bf159a3354dbb65fd110d566e0bb8b7cf",
+      "delivery_id": "7a1c44e0-93b2-4f6d-8e15-02d9b3c7a6f4",
+      "now": 1700000000,
+      "valid": false,
+      "body": "{\"event\":\"delivered\",\"tenant_id\":\"00000000-0000-0000-0000-000000000000\",\"envelope_id\":\"00000000-0000-0000-0000-000000000000\",\"domain\":\"example.com\"}"
+    },
+    {
+      "name": "timestamp_changed_after_signing",
+      "secret": "brsig_00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff",
+      "signature_header": "t=1700000001,v1=bbc9e13024abefb01b0cba3e34e5399bf159a3354dbb65fd110d566e0bb8b7cf",
+      "delivery_id": "7a1c44e0-93b2-4f6d-8e15-02d9b3c7a6f4",
+      "now": 1700000001,
+      "valid": false,
+      "body": "{\"event\":\"delivered\",\"tenant_id\":\"00000000-0000-0000-0000-000000000000\",\"envelope_id\":\"00000000-0000-0000-0000-000000000000\",\"domain\":\"example.com\"}"
+    },
+    {
+      "name": "rotation_header_verifies_with_new_secret",
+      "secret": "brsig_00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff",
+      "signature_header": "t=1700000000,v1=bbc9e13024abefb01b0cba3e34e5399bf159a3354dbb65fd110d566e0bb8b7cf,v1=344eb366a0941e31796bacd615acf26a7390912029070527582ab6cb1597e21d",
+      "delivery_id": "7a1c44e0-93b2-4f6d-8e15-02d9b3c7a6f4",
+      "now": 1700000000,
+      "valid": true,
+      "body": "{\"event\":\"delivered\",\"tenant_id\":\"00000000-0000-0000-0000-000000000000\",\"envelope_id\":\"00000000-0000-0000-0000-000000000000\",\"domain\":\"example.com\"}"
+    },
+    {
+      "name": "rotation_header_verifies_with_old_secret",
+      "secret": "brsig_ffeeddccbbaa99887766554433221100ffeeddccbbaa99887766554433221100",
+      "signature_header": "t=1700000000,v1=bbc9e13024abefb01b0cba3e34e5399bf159a3354dbb65fd110d566e0bb8b7cf,v1=344eb366a0941e31796bacd615acf26a7390912029070527582ab6cb1597e21d",
+      "delivery_id": "7a1c44e0-93b2-4f6d-8e15-02d9b3c7a6f4",
+      "now": 1700000000,
+      "valid": true,
+      "body": "{\"event\":\"delivered\",\"tenant_id\":\"00000000-0000-0000-0000-000000000000\",\"envelope_id\":\"00000000-0000-0000-0000-000000000000\",\"domain\":\"example.com\"}"
+    },
+    {
+      "name": "rotation_header_rejects_unrelated_secret",
+      "secret": "brsig_0000000000000000000000000000000000000000000000000000000000000000",
+      "signature_header": "t=1700000000,v1=bbc9e13024abefb01b0cba3e34e5399bf159a3354dbb65fd110d566e0bb8b7cf,v1=344eb366a0941e31796bacd615acf26a7390912029070527582ab6cb1597e21d",
+      "delivery_id": "7a1c44e0-93b2-4f6d-8e15-02d9b3c7a6f4",
+      "now": 1700000000,
+      "valid": false,
+      "body": "{\"event\":\"delivered\",\"tenant_id\":\"00000000-0000-0000-0000-000000000000\",\"envelope_id\":\"00000000-0000-0000-0000-000000000000\",\"domain\":\"example.com\"}"
+    },
+    {
+      "name": "old_secret_rejected_once_overlap_ended",
+      "secret": "brsig_ffeeddccbbaa99887766554433221100ffeeddccbbaa99887766554433221100",
+      "signature_header": "t=1700000000,v1=bbc9e13024abefb01b0cba3e34e5399bf159a3354dbb65fd110d566e0bb8b7cf",
+      "delivery_id": "7a1c44e0-93b2-4f6d-8e15-02d9b3c7a6f4",
+      "now": 1700000000,
+      "valid": false,
+      "body": "{\"event\":\"delivered\",\"tenant_id\":\"00000000-0000-0000-0000-000000000000\",\"envelope_id\":\"00000000-0000-0000-0000-000000000000\",\"domain\":\"example.com\"}"
+    },
+    {
+      "name": "spaces_after_commas",
+      "secret": "brsig_00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff",
+      "signature_header": "t=1700000000, v1=deadbeef, v1=bbc9e13024abefb01b0cba3e34e5399bf159a3354dbb65fd110d566e0bb8b7cf",
+      "delivery_id": "7a1c44e0-93b2-4f6d-8e15-02d9b3c7a6f4",
+      "now": 1700000000,
+      "valid": true,
+      "body": "{\"event\":\"delivered\",\"tenant_id\":\"00000000-0000-0000-0000-000000000000\",\"envelope_id\":\"00000000-0000-0000-0000-000000000000\",\"domain\":\"example.com\"}"
+    },
+    {
+      "name": "unknown_schemes_ignored",
+      "secret": "brsig_00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff",
+      "signature_header": "t=1700000000,v0=abc,v1=bbc9e13024abefb01b0cba3e34e5399bf159a3354dbb65fd110d566e0bb8b7cf,v2=def",
+      "delivery_id": "7a1c44e0-93b2-4f6d-8e15-02d9b3c7a6f4",
+      "now": 1700000000,
+      "valid": true,
+      "body": "{\"event\":\"delivered\",\"tenant_id\":\"00000000-0000-0000-0000-000000000000\",\"envelope_id\":\"00000000-0000-0000-0000-000000000000\",\"domain\":\"example.com\"}"
+    },
+    {
+      "name": "first_timestamp_wins",
+      "secret": "brsig_00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff",
+      "signature_header": "t=1700000000,t=1,v1=bbc9e13024abefb01b0cba3e34e5399bf159a3354dbb65fd110d566e0bb8b7cf",
+      "delivery_id": "7a1c44e0-93b2-4f6d-8e15-02d9b3c7a6f4",
+      "now": 1700000000,
+      "valid": true,
+      "body": "{\"event\":\"delivered\",\"tenant_id\":\"00000000-0000-0000-0000-000000000000\",\"envelope_id\":\"00000000-0000-0000-0000-000000000000\",\"domain\":\"example.com\"}"
+    },
+    {
+      "name": "no_v1_values",
+      "secret": "brsig_00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff",
+      "signature_header": "t=1700000000",
+      "delivery_id": "7a1c44e0-93b2-4f6d-8e15-02d9b3c7a6f4",
+      "now": 1700000000,
+      "valid": false,
+      "body": "{\"event\":\"delivered\",\"tenant_id\":\"00000000-0000-0000-0000-000000000000\",\"envelope_id\":\"00000000-0000-0000-0000-000000000000\",\"domain\":\"example.com\"}"
+    },
+    {
+      "name": "v1_only_from_unknown_scheme",
+      "secret": "brsig_00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff",
+      "signature_header": "t=1700000000,v0=bbc9e13024abefb01b0cba3e34e5399bf159a3354dbb65fd110d566e0bb8b7cf",
+      "delivery_id": "7a1c44e0-93b2-4f6d-8e15-02d9b3c7a6f4",
+      "now": 1700000000,
+      "valid": false,
+      "body": "{\"event\":\"delivered\",\"tenant_id\":\"00000000-0000-0000-0000-000000000000\",\"envelope_id\":\"00000000-0000-0000-0000-000000000000\",\"domain\":\"example.com\"}"
+    },
+    {
+      "name": "missing_timestamp",
+      "secret": "brsig_00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff",
+      "signature_header": "v1=bbc9e13024abefb01b0cba3e34e5399bf159a3354dbb65fd110d566e0bb8b7cf",
+      "delivery_id": "7a1c44e0-93b2-4f6d-8e15-02d9b3c7a6f4",
+      "now": 1700000000,
+      "valid": false,
+      "body": "{\"event\":\"delivered\",\"tenant_id\":\"00000000-0000-0000-0000-000000000000\",\"envelope_id\":\"00000000-0000-0000-0000-000000000000\",\"domain\":\"example.com\"}"
+    },
+    {
+      "name": "empty_header",
+      "secret": "brsig_00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff",
+      "signature_header": "",
+      "delivery_id": "7a1c44e0-93b2-4f6d-8e15-02d9b3c7a6f4",
+      "now": 1700000000,
+      "valid": false,
+      "body": "{\"event\":\"delivered\",\"tenant_id\":\"00000000-0000-0000-0000-000000000000\",\"envelope_id\":\"00000000-0000-0000-0000-000000000000\",\"domain\":\"example.com\"}"
+    },
+    {
+      "name": "non_numeric_timestamp",
+      "secret": "brsig_00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff",
+      "signature_header": "t=abc,v1=bbc9e13024abefb01b0cba3e34e5399bf159a3354dbb65fd110d566e0bb8b7cf",
+      "delivery_id": "7a1c44e0-93b2-4f6d-8e15-02d9b3c7a6f4",
+      "now": 1700000000,
+      "valid": false,
+      "body": "{\"event\":\"delivered\",\"tenant_id\":\"00000000-0000-0000-0000-000000000000\",\"envelope_id\":\"00000000-0000-0000-0000-000000000000\",\"domain\":\"example.com\"}"
+    },
+    {
+      "name": "scientific_timestamp",
+      "secret": "brsig_00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff",
+      "signature_header": "t=1.7e9,v1=bbc9e13024abefb01b0cba3e34e5399bf159a3354dbb65fd110d566e0bb8b7cf",
+      "delivery_id": "7a1c44e0-93b2-4f6d-8e15-02d9b3c7a6f4",
+      "now": 1700000000,
+      "valid": false,
+      "body": "{\"event\":\"delivered\",\"tenant_id\":\"00000000-0000-0000-0000-000000000000\",\"envelope_id\":\"00000000-0000-0000-0000-000000000000\",\"domain\":\"example.com\"}"
+    },
+    {
+      "name": "fractional_timestamp",
+      "secret": "brsig_00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff",
+      "signature_header": "t=1700000000.0,v1=bbc9e13024abefb01b0cba3e34e5399bf159a3354dbb65fd110d566e0bb8b7cf",
+      "delivery_id": "7a1c44e0-93b2-4f6d-8e15-02d9b3c7a6f4",
+      "now": 1700000000,
+      "valid": false,
+      "body": "{\"event\":\"delivered\",\"tenant_id\":\"00000000-0000-0000-0000-000000000000\",\"envelope_id\":\"00000000-0000-0000-0000-000000000000\",\"domain\":\"example.com\"}"
+    },
+    {
+      "name": "negative_timestamp",
+      "secret": "brsig_00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff",
+      "signature_header": "t=-1700000000,v1=bbc9e13024abefb01b0cba3e34e5399bf159a3354dbb65fd110d566e0bb8b7cf",
+      "delivery_id": "7a1c44e0-93b2-4f6d-8e15-02d9b3c7a6f4",
+      "now": 1700000000,
+      "valid": false,
+      "body": "{\"event\":\"delivered\",\"tenant_id\":\"00000000-0000-0000-0000-000000000000\",\"envelope_id\":\"00000000-0000-0000-0000-000000000000\",\"domain\":\"example.com\"}"
+    },
+    {
+      "name": "leading_zero_timestamp",
+      "secret": "brsig_00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff",
+      "signature_header": "t=01700000000,v1=bbc9e13024abefb01b0cba3e34e5399bf159a3354dbb65fd110d566e0bb8b7cf",
+      "delivery_id": "7a1c44e0-93b2-4f6d-8e15-02d9b3c7a6f4",
+      "now": 1700000000,
+      "valid": false,
+      "body": "{\"event\":\"delivered\",\"tenant_id\":\"00000000-0000-0000-0000-000000000000\",\"envelope_id\":\"00000000-0000-0000-0000-000000000000\",\"domain\":\"example.com\"}"
+    },
+    {
+      "name": "timestamp_too_large",
+      "secret": "brsig_00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff",
+      "signature_header": "t=99999999999999999999,v1=bbc9e13024abefb01b0cba3e34e5399bf159a3354dbb65fd110d566e0bb8b7cf",
+      "delivery_id": "7a1c44e0-93b2-4f6d-8e15-02d9b3c7a6f4",
+      "now": 1700000000,
+      "valid": false,
+      "body": "{\"event\":\"delivered\",\"tenant_id\":\"00000000-0000-0000-0000-000000000000\",\"envelope_id\":\"00000000-0000-0000-0000-000000000000\",\"domain\":\"example.com\"}"
+    },
+    {
+      "name": "non_hex_v1",
+      "secret": "brsig_00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff",
+      "signature_header": "t=1700000000,v1=not-hex-at-all",
+      "delivery_id": "7a1c44e0-93b2-4f6d-8e15-02d9b3c7a6f4",
+      "now": 1700000000,
+      "valid": false,
+      "body": "{\"event\":\"delivered\",\"tenant_id\":\"00000000-0000-0000-0000-000000000000\",\"envelope_id\":\"00000000-0000-0000-0000-000000000000\",\"domain\":\"example.com\"}"
+    },
+    {
+      "name": "short_v1",
+      "secret": "brsig_00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff",
+      "signature_header": "t=1700000000,v1=bbc9e13024abefb01b0cba3e34e5399b",
+      "delivery_id": "7a1c44e0-93b2-4f6d-8e15-02d9b3c7a6f4",
+      "now": 1700000000,
+      "valid": false,
+      "body": "{\"event\":\"delivered\",\"tenant_id\":\"00000000-0000-0000-0000-000000000000\",\"envelope_id\":\"00000000-0000-0000-0000-000000000000\",\"domain\":\"example.com\"}"
+    },
+    {
+      "name": "uppercase_v1_is_not_accepted",
+      "secret": "brsig_00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff",
+      "signature_header": "t=1700000000,v1=BBC9E13024ABEFB01B0CBA3E34E5399BF159A3354DBB65FD110D566E0BB8B7CF",
+      "delivery_id": "7a1c44e0-93b2-4f6d-8e15-02d9b3c7a6f4",
+      "now": 1700000000,
+      "valid": false,
+      "body": "{\"event\":\"delivered\",\"tenant_id\":\"00000000-0000-0000-0000-000000000000\",\"envelope_id\":\"00000000-0000-0000-0000-000000000000\",\"domain\":\"example.com\"}"
+    },
+    {
+      "name": "binary_body_is_not_transcoded",
+      "secret": "brsig_00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff",
+      "signature_header": "t=1700000000,v1=659731ada1f39f193ad68f2d13225b6b16c44399365bf9dac6c0b498f0472627",
+      "delivery_id": "7a1c44e0-93b2-4f6d-8e15-02d9b3c7a6f4",
+      "now": 1700000000,
+      "valid": true,
+      "body_base64": "AP/+e8MofYA="
+    },
+    {
+      "name": "empty_body",
+      "secret": "brsig_00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff",
+      "signature_header": "t=1700000000,v1=486f4302fec6dd8035cf027885bba7126a7aceab3513604635332e4842069192",
+      "delivery_id": "7a1c44e0-93b2-4f6d-8e15-02d9b3c7a6f4",
+      "now": 1700000000,
+      "valid": true,
+      "body": ""
+    },
+    {
+      "name": "inbound_scheme_signature_is_rejected",
+      "secret": "brsig_00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff",
+      "signature_header": "t=1700000000,v1=53d3b0207a08e278f7d4ed7eb3c8cbdbd74d788eec059f61cc3fdfc845b9d03c",
+      "delivery_id": "7a1c44e0-93b2-4f6d-8e15-02d9b3c7a6f4",
+      "now": 1700000000,
+      "valid": false,
+      "body": "{\"event\":\"delivered\",\"tenant_id\":\"00000000-0000-0000-0000-000000000000\",\"envelope_id\":\"00000000-0000-0000-0000-000000000000\",\"domain\":\"example.com\"}"
+    }
+  ]
+}

@@ -1,0 +1,2393 @@
+{
+  "api_key": "conformance-test-key-not-a-real-secret",
+  "cases": [
+    {
+      "name": "send_to_string",
+      "operation": "send",
+      "input": {
+        "from": "noreply@example.com",
+        "to": "user@example.com",
+        "subject": "Reset your password",
+        "html": "<p>Hi</p>"
+      },
+      "expect_request": {
+        "method": "POST",
+        "path": "/v1/send",
+        "body": {
+          "from": "noreply@example.com",
+          "to": "user@example.com",
+          "subject": "Reset your password",
+          "html": "<p>Hi</p>"
+        },
+        "absent_headers": [
+          "idempotency-key"
+        ]
+      },
+      "response": {
+        "status": 202,
+        "body": {
+          "id": "550e8400-e29b-41d4-a716-446655440000",
+          "ids": [
+            "550e8400-e29b-41d4-a716-446655440000"
+          ],
+          "status": "queued"
+        }
+      },
+      "expect_result": {
+        "id": "550e8400-e29b-41d4-a716-446655440000",
+        "ids": [
+          "550e8400-e29b-41d4-a716-446655440000"
+        ],
+        "status": "queued",
+        "warnings": []
+      }
+    },
+    {
+      "name": "send_to_list",
+      "operation": "send",
+      "input": {
+        "from": "noreply@example.com",
+        "to": [
+          "a@example.com",
+          "b@example.com"
+        ],
+        "subject": "Reset your password",
+        "html": "<p>Hi</p>"
+      },
+      "expect_request": {
+        "method": "POST",
+        "path": "/v1/send",
+        "body": {
+          "from": "noreply@example.com",
+          "to": [
+            "a@example.com",
+            "b@example.com"
+          ],
+          "subject": "Reset your password",
+          "html": "<p>Hi</p>"
+        },
+        "absent_headers": [
+          "idempotency-key"
+        ]
+      },
+      "response": {
+        "status": 202,
+        "body": {
+          "id": "550e8400-e29b-41d4-a716-446655440000",
+          "ids": [
+            "550e8400-e29b-41d4-a716-446655440000",
+            "6ba7b810-9dad-41d1-80b4-00c04fd430c8"
+          ],
+          "status": "queued"
+        }
+      },
+      "expect_result": {
+        "id": "550e8400-e29b-41d4-a716-446655440000",
+        "ids": [
+          "550e8400-e29b-41d4-a716-446655440000",
+          "6ba7b810-9dad-41d1-80b4-00c04fd430c8"
+        ],
+        "status": "queued",
+        "warnings": []
+      }
+    },
+    {
+      "name": "send_cc_string_bcc_list",
+      "operation": "send",
+      "input": {
+        "from": "noreply@example.com",
+        "to": "user@example.com",
+        "subject": "Reset your password",
+        "html": "<p>Hi</p>",
+        "cc": "manager@example.com",
+        "bcc": [
+          "audit@example.com",
+          "legal@example.com"
+        ]
+      },
+      "expect_request": {
+        "method": "POST",
+        "path": "/v1/send",
+        "body": {
+          "from": "noreply@example.com",
+          "to": "user@example.com",
+          "subject": "Reset your password",
+          "html": "<p>Hi</p>",
+          "cc": "manager@example.com",
+          "bcc": [
+            "audit@example.com",
+            "legal@example.com"
+          ]
+        },
+        "absent_headers": [
+          "idempotency-key"
+        ]
+      },
+      "response": {
+        "status": 202,
+        "body": {
+          "id": "550e8400-e29b-41d4-a716-446655440000",
+          "ids": [
+            "550e8400-e29b-41d4-a716-446655440000"
+          ],
+          "status": "queued"
+        }
+      },
+      "expect_result": {
+        "id": "550e8400-e29b-41d4-a716-446655440000",
+        "ids": [
+          "550e8400-e29b-41d4-a716-446655440000"
+        ],
+        "status": "queued",
+        "warnings": []
+      }
+    },
+    {
+      "name": "send_cc_list_bcc_string",
+      "operation": "send",
+      "input": {
+        "from": "noreply@example.com",
+        "to": "user@example.com",
+        "subject": "Reset your password",
+        "html": "<p>Hi</p>",
+        "cc": [
+          "a@example.com",
+          "b@example.com"
+        ],
+        "bcc": "audit@example.com"
+      },
+      "expect_request": {
+        "method": "POST",
+        "path": "/v1/send",
+        "body": {
+          "from": "noreply@example.com",
+          "to": "user@example.com",
+          "subject": "Reset your password",
+          "html": "<p>Hi</p>",
+          "cc": [
+            "a@example.com",
+            "b@example.com"
+          ],
+          "bcc": "audit@example.com"
+        },
+        "absent_headers": [
+          "idempotency-key"
+        ]
+      },
+      "response": {
+        "status": 202,
+        "body": {
+          "id": "550e8400-e29b-41d4-a716-446655440000",
+          "ids": [
+            "550e8400-e29b-41d4-a716-446655440000"
+          ],
+          "status": "queued"
+        }
+      },
+      "expect_result": {
+        "id": "550e8400-e29b-41d4-a716-446655440000",
+        "ids": [
+          "550e8400-e29b-41d4-a716-446655440000"
+        ],
+        "status": "queued",
+        "warnings": []
+      }
+    },
+    {
+      "name": "send_all_text_fields",
+      "operation": "send",
+      "input": {
+        "from": "noreply@example.com",
+        "to": "user@example.com",
+        "subject": "Ahoj světe ✓",
+        "html": "<p>Café &amp; <b>bold</b></p>",
+        "text": "Café & bold",
+        "headers": {
+          "Reply-To": "support@example.com",
+          "List-Unsubscribe": "<https://example.com/u/1>"
+        }
+      },
+      "expect_request": {
+        "method": "POST",
+        "path": "/v1/send",
+        "body": {
+          "from": "noreply@example.com",
+          "to": "user@example.com",
+          "subject": "Ahoj světe ✓",
+          "html": "<p>Café &amp; <b>bold</b></p>",
+          "text": "Café & bold",
+          "headers": {
+            "Reply-To": "support@example.com",
+            "List-Unsubscribe": "<https://example.com/u/1>"
+          }
+        },
+        "absent_headers": [
+          "idempotency-key"
+        ]
+      },
+      "response": {
+        "status": 202,
+        "body": {
+          "id": "550e8400-e29b-41d4-a716-446655440000",
+          "ids": [
+            "550e8400-e29b-41d4-a716-446655440000"
+          ],
+          "status": "queued"
+        }
+      },
+      "expect_result": {
+        "id": "550e8400-e29b-41d4-a716-446655440000",
+        "ids": [
+          "550e8400-e29b-41d4-a716-446655440000"
+        ],
+        "status": "queued",
+        "warnings": []
+      }
+    },
+    {
+      "name": "send_tags",
+      "operation": "send",
+      "input": {
+        "from": "noreply@example.com",
+        "to": "user@example.com",
+        "subject": "Reset your password",
+        "html": "<p>Hi</p>",
+        "tags": [
+          {
+            "key": "campaign",
+            "value": "welcome.v2"
+          },
+          {
+            "key": "tenant_ref",
+            "value": "A-1_b"
+          }
+        ]
+      },
+      "expect_request": {
+        "method": "POST",
+        "path": "/v1/send",
+        "body": {
+          "from": "noreply@example.com",
+          "to": "user@example.com",
+          "subject": "Reset your password",
+          "html": "<p>Hi</p>",
+          "tags": [
+            {
+              "key": "campaign",
+              "value": "welcome.v2"
+            },
+            {
+              "key": "tenant_ref",
+              "value": "A-1_b"
+            }
+          ]
+        },
+        "absent_headers": [
+          "idempotency-key"
+        ]
+      },
+      "response": {
+        "status": 202,
+        "body": {
+          "id": "550e8400-e29b-41d4-a716-446655440000",
+          "ids": [
+            "550e8400-e29b-41d4-a716-446655440000"
+          ],
+          "status": "queued"
+        }
+      },
+      "expect_result": {
+        "id": "550e8400-e29b-41d4-a716-446655440000",
+        "ids": [
+          "550e8400-e29b-41d4-a716-446655440000"
+        ],
+        "status": "queued",
+        "warnings": []
+      }
+    },
+    {
+      "name": "send_attachments",
+      "operation": "send",
+      "input": {
+        "from": "noreply@example.com",
+        "to": "user@example.com",
+        "subject": "Reset your password",
+        "html": "<p>Hi</p>",
+        "attachments": [
+          {
+            "filename": "report.pdf",
+            "content_type": "application/pdf",
+            "content_base64": "JVBERi0xLjQ="
+          },
+          {
+            "filename": "nákup.txt",
+            "content_type": "text/plain; charset=utf-8",
+            "content_base64": "aGVsbG8="
+          }
+        ]
+      },
+      "expect_request": {
+        "method": "POST",
+        "path": "/v1/send",
+        "body": {
+          "from": "noreply@example.com",
+          "to": "user@example.com",
+          "subject": "Reset your password",
+          "html": "<p>Hi</p>",
+          "attachments": [
+            {
+              "filename": "report.pdf",
+              "content_type": "application/pdf",
+              "content_base64": "JVBERi0xLjQ="
+            },
+            {
+              "filename": "nákup.txt",
+              "content_type": "text/plain; charset=utf-8",
+              "content_base64": "aGVsbG8="
+            }
+          ]
+        },
+        "absent_headers": [
+          "idempotency-key"
+        ]
+      },
+      "response": {
+        "status": 202,
+        "body": {
+          "id": "550e8400-e29b-41d4-a716-446655440000",
+          "ids": [
+            "550e8400-e29b-41d4-a716-446655440000"
+          ],
+          "status": "queued"
+        }
+      },
+      "expect_result": {
+        "id": "550e8400-e29b-41d4-a716-446655440000",
+        "ids": [
+          "550e8400-e29b-41d4-a716-446655440000"
+        ],
+        "status": "queued",
+        "warnings": []
+      }
+    },
+    {
+      "name": "send_attachment_from_bytes",
+      "operation": "send",
+      "input": {
+        "from": "noreply@example.com",
+        "to": "user@example.com",
+        "subject": "Reset your password",
+        "html": "<p>Hi</p>",
+        "attachments": [
+          {
+            "filename": "blob.bin",
+            "content_type": "application/octet-stream",
+            "from_bytes_base64": "AAMGCQwPEhUYGx4hJCcqLTAzNjk8P0JFSEtOUVRXWl1gY2ZpbG9ydXh7foGEh4qNkJOWmZyfoqWoq66xtLe6vcDDxsnMz9LV2Nve4eTn6u3w8/b5/P///gCA"
+          }
+        ]
+      },
+      "expect_request": {
+        "method": "POST",
+        "path": "/v1/send",
+        "body": {
+          "from": "noreply@example.com",
+          "to": "user@example.com",
+          "subject": "Reset your password",
+          "html": "<p>Hi</p>",
+          "attachments": [
+            {
+              "filename": "blob.bin",
+              "content_type": "application/octet-stream",
+              "content_base64": "AAMGCQwPEhUYGx4hJCcqLTAzNjk8P0JFSEtOUVRXWl1gY2ZpbG9ydXh7foGEh4qNkJOWmZyfoqWoq66xtLe6vcDDxsnMz9LV2Nve4eTn6u3w8/b5/P///gCA"
+            }
+          ]
+        },
+        "absent_headers": [
+          "idempotency-key"
+        ]
+      },
+      "response": {
+        "status": 202,
+        "body": {
+          "id": "550e8400-e29b-41d4-a716-446655440000",
+          "ids": [
+            "550e8400-e29b-41d4-a716-446655440000"
+          ],
+          "status": "queued"
+        }
+      },
+      "expect_result": {
+        "id": "550e8400-e29b-41d4-a716-446655440000",
+        "ids": [
+          "550e8400-e29b-41d4-a716-446655440000"
+        ],
+        "status": "queued",
+        "warnings": []
+      }
+    },
+    {
+      "name": "send_idempotency_key",
+      "operation": "send",
+      "input": {
+        "from": "noreply@example.com",
+        "to": "user@example.com",
+        "subject": "Reset your password",
+        "html": "<p>Hi</p>",
+        "idempotency_key": "reset-2024-06-29-user-42"
+      },
+      "expect_request": {
+        "method": "POST",
+        "path": "/v1/send",
+        "body": {
+          "from": "noreply@example.com",
+          "to": "user@example.com",
+          "subject": "Reset your password",
+          "html": "<p>Hi</p>"
+        },
+        "headers": {
+          "idempotency-key": "reset-2024-06-29-user-42"
+        }
+      },
+      "response": {
+        "status": 202,
+        "body": {
+          "id": "550e8400-e29b-41d4-a716-446655440000",
+          "ids": [
+            "550e8400-e29b-41d4-a716-446655440000"
+          ],
+          "status": "queued"
+        }
+      },
+      "expect_result": {
+        "id": "550e8400-e29b-41d4-a716-446655440000",
+        "ids": [
+          "550e8400-e29b-41d4-a716-446655440000"
+        ],
+        "status": "queued",
+        "warnings": []
+      }
+    },
+    {
+      "name": "send_warnings_and_unknown_fields",
+      "operation": "send",
+      "input": {
+        "from": "noreply@example.com",
+        "to": "user@example.com",
+        "subject": "Reset your password",
+        "html": "<p>Hi</p>"
+      },
+      "expect_request": {
+        "method": "POST",
+        "path": "/v1/send",
+        "body": {
+          "from": "noreply@example.com",
+          "to": "user@example.com",
+          "subject": "Reset your password",
+          "html": "<p>Hi</p>"
+        },
+        "absent_headers": [
+          "idempotency-key"
+        ]
+      },
+      "response": {
+        "status": 202,
+        "body": {
+          "id": "550e8400-e29b-41d4-a716-446655440000",
+          "ids": [
+            "550e8400-e29b-41d4-a716-446655440000"
+          ],
+          "status": "queued",
+          "warnings": [
+            "missing_text_alternative",
+            "future_warning"
+          ],
+          "some_future_field": {
+            "a": 1
+          }
+        }
+      },
+      "expect_result": {
+        "id": "550e8400-e29b-41d4-a716-446655440000",
+        "ids": [
+          "550e8400-e29b-41d4-a716-446655440000"
+        ],
+        "status": "queued",
+        "warnings": [
+          "missing_text_alternative",
+          "future_warning"
+        ]
+      }
+    },
+    {
+      "name": "send_response_only_required_fields",
+      "operation": "send",
+      "input": {
+        "from": "noreply@example.com",
+        "to": "user@example.com",
+        "subject": "Reset your password",
+        "html": "<p>Hi</p>"
+      },
+      "expect_request": {
+        "method": "POST",
+        "path": "/v1/send",
+        "body": {
+          "from": "noreply@example.com",
+          "to": "user@example.com",
+          "subject": "Reset your password",
+          "html": "<p>Hi</p>"
+        },
+        "absent_headers": [
+          "idempotency-key"
+        ]
+      },
+      "response": {
+        "status": 202,
+        "body": {
+          "id": "550e8400-e29b-41d4-a716-446655440000",
+          "status": "queued"
+        }
+      },
+      "expect_result": {
+        "id": "550e8400-e29b-41d4-a716-446655440000",
+        "ids": [],
+        "status": "queued",
+        "warnings": []
+      }
+    },
+    {
+      "name": "send_base_url_trailing_slash",
+      "operation": "send",
+      "input": {
+        "from": "noreply@example.com",
+        "to": "user@example.com",
+        "subject": "Reset your password",
+        "html": "<p>Hi</p>"
+      },
+      "expect_request": {
+        "method": "POST",
+        "path": "/v1/send",
+        "body": {
+          "from": "noreply@example.com",
+          "to": "user@example.com",
+          "subject": "Reset your password",
+          "html": "<p>Hi</p>"
+        },
+        "absent_headers": [
+          "idempotency-key"
+        ]
+      },
+      "response": {
+        "status": 202,
+        "body": {
+          "id": "550e8400-e29b-41d4-a716-446655440000",
+          "ids": [
+            "550e8400-e29b-41d4-a716-446655440000"
+          ],
+          "status": "queued"
+        }
+      },
+      "client": {
+        "trailing_slash": true
+      },
+      "expect_result": {
+        "id": "550e8400-e29b-41d4-a716-446655440000",
+        "ids": [
+          "550e8400-e29b-41d4-a716-446655440000"
+        ],
+        "status": "queued",
+        "warnings": []
+      }
+    },
+    {
+      "name": "error_invalid_payload",
+      "operation": "send",
+      "input": {
+        "from": "noreply@example.com",
+        "to": "user@example.com",
+        "subject": "Reset your password",
+        "html": "<p>Hi</p>"
+      },
+      "expect_request": {
+        "method": "POST",
+        "path": "/v1/send",
+        "body": {
+          "from": "noreply@example.com",
+          "to": "user@example.com",
+          "subject": "Reset your password",
+          "html": "<p>Hi</p>"
+        },
+        "absent_headers": [
+          "idempotency-key"
+        ]
+      },
+      "response": {
+        "status": 400,
+        "body": {
+          "error": {
+            "code": "invalid_payload",
+            "message": "invalid recipient address"
+          }
+        }
+      },
+      "expect_error": {
+        "kind": "api",
+        "status": 400,
+        "code": "invalid_payload",
+        "message": "invalid recipient address",
+        "retry_after": null
+      }
+    },
+    {
+      "name": "error_unauthorized",
+      "operation": "send",
+      "input": {
+        "from": "noreply@example.com",
+        "to": "user@example.com",
+        "subject": "Reset your password",
+        "html": "<p>Hi</p>"
+      },
+      "expect_request": {
+        "method": "POST",
+        "path": "/v1/send",
+        "body": {
+          "from": "noreply@example.com",
+          "to": "user@example.com",
+          "subject": "Reset your password",
+          "html": "<p>Hi</p>"
+        },
+        "absent_headers": [
+          "idempotency-key"
+        ]
+      },
+      "response": {
+        "status": 401,
+        "body": {
+          "error": {
+            "code": "unauthorized",
+            "message": "invalid api key"
+          }
+        }
+      },
+      "expect_error": {
+        "kind": "api",
+        "status": 401,
+        "code": "unauthorized",
+        "message": "invalid api key",
+        "retry_after": null
+      }
+    },
+    {
+      "name": "error_scope_missing",
+      "operation": "send",
+      "input": {
+        "from": "noreply@example.com",
+        "to": "user@example.com",
+        "subject": "Reset your password",
+        "html": "<p>Hi</p>"
+      },
+      "expect_request": {
+        "method": "POST",
+        "path": "/v1/send",
+        "body": {
+          "from": "noreply@example.com",
+          "to": "user@example.com",
+          "subject": "Reset your password",
+          "html": "<p>Hi</p>"
+        },
+        "absent_headers": [
+          "idempotency-key"
+        ]
+      },
+      "response": {
+        "status": 403,
+        "body": {
+          "error": {
+            "code": "scope_missing",
+            "message": "api key missing 'send' scope"
+          }
+        }
+      },
+      "expect_error": {
+        "kind": "api",
+        "status": 403,
+        "code": "scope_missing",
+        "message": "api key missing 'send' scope",
+        "retry_after": null
+      }
+    },
+    {
+      "name": "error_domain_not_verified",
+      "operation": "send",
+      "input": {
+        "from": "noreply@example.com",
+        "to": "user@example.com",
+        "subject": "Reset your password",
+        "html": "<p>Hi</p>"
+      },
+      "expect_request": {
+        "method": "POST",
+        "path": "/v1/send",
+        "body": {
+          "from": "noreply@example.com",
+          "to": "user@example.com",
+          "subject": "Reset your password",
+          "html": "<p>Hi</p>"
+        },
+        "absent_headers": [
+          "idempotency-key"
+        ]
+      },
+      "response": {
+        "status": 403,
+        "body": {
+          "error": {
+            "code": "domain_not_verified",
+            "message": "sending domain not verified"
+          }
+        }
+      },
+      "expect_error": {
+        "kind": "api",
+        "status": 403,
+        "code": "domain_not_verified",
+        "message": "sending domain not verified",
+        "retry_after": null
+      }
+    },
+    {
+      "name": "error_recipient_suppressed",
+      "operation": "send",
+      "input": {
+        "from": "noreply@example.com",
+        "to": "user@example.com",
+        "subject": "Reset your password",
+        "html": "<p>Hi</p>"
+      },
+      "expect_request": {
+        "method": "POST",
+        "path": "/v1/send",
+        "body": {
+          "from": "noreply@example.com",
+          "to": "user@example.com",
+          "subject": "Reset your password",
+          "html": "<p>Hi</p>"
+        },
+        "absent_headers": [
+          "idempotency-key"
+        ]
+      },
+      "response": {
+        "status": 403,
+        "body": {
+          "error": {
+            "code": "recipient_suppressed",
+            "message": "recipient is suppressed"
+          }
+        }
+      },
+      "expect_error": {
+        "kind": "api",
+        "status": 403,
+        "code": "recipient_suppressed",
+        "message": "recipient is suppressed",
+        "retry_after": null
+      }
+    },
+    {
+      "name": "error_tenant_suspended",
+      "operation": "send",
+      "input": {
+        "from": "noreply@example.com",
+        "to": "user@example.com",
+        "subject": "Reset your password",
+        "html": "<p>Hi</p>"
+      },
+      "expect_request": {
+        "method": "POST",
+        "path": "/v1/send",
+        "body": {
+          "from": "noreply@example.com",
+          "to": "user@example.com",
+          "subject": "Reset your password",
+          "html": "<p>Hi</p>"
+        },
+        "absent_headers": [
+          "idempotency-key"
+        ]
+      },
+      "response": {
+        "status": 403,
+        "body": {
+          "error": {
+            "code": "tenant_suspended",
+            "message": "tenant is suspended"
+          }
+        }
+      },
+      "expect_error": {
+        "kind": "api",
+        "status": 403,
+        "code": "tenant_suspended",
+        "message": "tenant is suspended",
+        "retry_after": null
+      }
+    },
+    {
+      "name": "error_plan_restricted",
+      "operation": "send",
+      "input": {
+        "from": "noreply@example.com",
+        "to": "user@example.com",
+        "subject": "Reset your password",
+        "html": "<p>Hi</p>"
+      },
+      "expect_request": {
+        "method": "POST",
+        "path": "/v1/send",
+        "body": {
+          "from": "noreply@example.com",
+          "to": "user@example.com",
+          "subject": "Reset your password",
+          "html": "<p>Hi</p>"
+        },
+        "absent_headers": [
+          "idempotency-key"
+        ]
+      },
+      "response": {
+        "status": 403,
+        "body": {
+          "error": {
+            "code": "plan_restricted",
+            "message": "Attachments need a paid plan"
+          }
+        }
+      },
+      "expect_error": {
+        "kind": "api",
+        "status": 403,
+        "code": "plan_restricted",
+        "message": "Attachments need a paid plan",
+        "retry_after": null
+      }
+    },
+    {
+      "name": "error_unknown_tenant",
+      "operation": "send",
+      "input": {
+        "from": "noreply@example.com",
+        "to": "user@example.com",
+        "subject": "Reset your password",
+        "html": "<p>Hi</p>"
+      },
+      "expect_request": {
+        "method": "POST",
+        "path": "/v1/send",
+        "body": {
+          "from": "noreply@example.com",
+          "to": "user@example.com",
+          "subject": "Reset your password",
+          "html": "<p>Hi</p>"
+        },
+        "absent_headers": [
+          "idempotency-key"
+        ]
+      },
+      "response": {
+        "status": 404,
+        "body": {
+          "error": {
+            "code": "unknown_tenant",
+            "message": "tenant not found"
+          }
+        }
+      },
+      "expect_error": {
+        "kind": "api",
+        "status": 404,
+        "code": "unknown_tenant",
+        "message": "tenant not found",
+        "retry_after": null
+      }
+    },
+    {
+      "name": "error_payload_too_large",
+      "operation": "send",
+      "input": {
+        "from": "noreply@example.com",
+        "to": "user@example.com",
+        "subject": "Reset your password",
+        "html": "<p>Hi</p>"
+      },
+      "expect_request": {
+        "method": "POST",
+        "path": "/v1/send",
+        "body": {
+          "from": "noreply@example.com",
+          "to": "user@example.com",
+          "subject": "Reset your password",
+          "html": "<p>Hi</p>"
+        },
+        "absent_headers": [
+          "idempotency-key"
+        ]
+      },
+      "response": {
+        "status": 413,
+        "body": {
+          "error": {
+            "code": "payload_too_large",
+            "message": "Request body is too large"
+          }
+        }
+      },
+      "expect_error": {
+        "kind": "api",
+        "status": 413,
+        "code": "payload_too_large",
+        "message": "Request body is too large",
+        "retry_after": null
+      }
+    },
+    {
+      "name": "error_invalid_tag",
+      "operation": "send",
+      "input": {
+        "from": "noreply@example.com",
+        "to": "user@example.com",
+        "subject": "Reset your password",
+        "html": "<p>Hi</p>"
+      },
+      "expect_request": {
+        "method": "POST",
+        "path": "/v1/send",
+        "body": {
+          "from": "noreply@example.com",
+          "to": "user@example.com",
+          "subject": "Reset your password",
+          "html": "<p>Hi</p>"
+        },
+        "absent_headers": [
+          "idempotency-key"
+        ]
+      },
+      "response": {
+        "status": 400,
+        "body": {
+          "error": {
+            "code": "invalid_tag",
+            "message": "tags[1].value must be 1..=64 characters of A-Z, a-z, 0-9, _, . and -"
+          }
+        }
+      },
+      "expect_error": {
+        "kind": "api",
+        "status": 400,
+        "code": "invalid_tag",
+        "message": "tags[1].value must be 1..=64 characters of A-Z, a-z, 0-9, _, . and -",
+        "retry_after": null
+      }
+    },
+    {
+      "name": "error_too_many_attachments",
+      "operation": "send",
+      "input": {
+        "from": "noreply@example.com",
+        "to": "user@example.com",
+        "subject": "Reset your password",
+        "html": "<p>Hi</p>"
+      },
+      "expect_request": {
+        "method": "POST",
+        "path": "/v1/send",
+        "body": {
+          "from": "noreply@example.com",
+          "to": "user@example.com",
+          "subject": "Reset your password",
+          "html": "<p>Hi</p>"
+        },
+        "absent_headers": [
+          "idempotency-key"
+        ]
+      },
+      "response": {
+        "status": 400,
+        "body": {
+          "error": {
+            "code": "too_many_attachments",
+            "message": "At most 10 attachments"
+          }
+        }
+      },
+      "expect_error": {
+        "kind": "api",
+        "status": 400,
+        "code": "too_many_attachments",
+        "message": "At most 10 attachments",
+        "retry_after": null
+      }
+    },
+    {
+      "name": "error_attachment_too_large",
+      "operation": "send",
+      "input": {
+        "from": "noreply@example.com",
+        "to": "user@example.com",
+        "subject": "Reset your password",
+        "html": "<p>Hi</p>"
+      },
+      "expect_request": {
+        "method": "POST",
+        "path": "/v1/send",
+        "body": {
+          "from": "noreply@example.com",
+          "to": "user@example.com",
+          "subject": "Reset your password",
+          "html": "<p>Hi</p>"
+        },
+        "absent_headers": [
+          "idempotency-key"
+        ]
+      },
+      "response": {
+        "status": 400,
+        "body": {
+          "error": {
+            "code": "attachment_too_large",
+            "message": "Attachments exceed 10,240,000 bytes"
+          }
+        }
+      },
+      "expect_error": {
+        "kind": "api",
+        "status": 400,
+        "code": "attachment_too_large",
+        "message": "Attachments exceed 10,240,000 bytes",
+        "retry_after": null
+      }
+    },
+    {
+      "name": "error_invalid_attachment_base64",
+      "operation": "send",
+      "input": {
+        "from": "noreply@example.com",
+        "to": "user@example.com",
+        "subject": "Reset your password",
+        "html": "<p>Hi</p>"
+      },
+      "expect_request": {
+        "method": "POST",
+        "path": "/v1/send",
+        "body": {
+          "from": "noreply@example.com",
+          "to": "user@example.com",
+          "subject": "Reset your password",
+          "html": "<p>Hi</p>"
+        },
+        "absent_headers": [
+          "idempotency-key"
+        ]
+      },
+      "response": {
+        "status": 400,
+        "body": {
+          "error": {
+            "code": "invalid_attachment_base64",
+            "message": "attachments[0] is not valid base64"
+          }
+        }
+      },
+      "expect_error": {
+        "kind": "api",
+        "status": 400,
+        "code": "invalid_attachment_base64",
+        "message": "attachments[0] is not valid base64",
+        "retry_after": null
+      }
+    },
+    {
+      "name": "error_invalid_attachment_filename",
+      "operation": "send",
+      "input": {
+        "from": "noreply@example.com",
+        "to": "user@example.com",
+        "subject": "Reset your password",
+        "html": "<p>Hi</p>"
+      },
+      "expect_request": {
+        "method": "POST",
+        "path": "/v1/send",
+        "body": {
+          "from": "noreply@example.com",
+          "to": "user@example.com",
+          "subject": "Reset your password",
+          "html": "<p>Hi</p>"
+        },
+        "absent_headers": [
+          "idempotency-key"
+        ]
+      },
+      "response": {
+        "status": 400,
+        "body": {
+          "error": {
+            "code": "invalid_attachment_filename",
+            "message": "attachments[0] has an invalid filename"
+          }
+        }
+      },
+      "expect_error": {
+        "kind": "api",
+        "status": 400,
+        "code": "invalid_attachment_filename",
+        "message": "attachments[0] has an invalid filename",
+        "retry_after": null
+      }
+    },
+    {
+      "name": "error_invalid_attachment_content_type",
+      "operation": "send",
+      "input": {
+        "from": "noreply@example.com",
+        "to": "user@example.com",
+        "subject": "Reset your password",
+        "html": "<p>Hi</p>"
+      },
+      "expect_request": {
+        "method": "POST",
+        "path": "/v1/send",
+        "body": {
+          "from": "noreply@example.com",
+          "to": "user@example.com",
+          "subject": "Reset your password",
+          "html": "<p>Hi</p>"
+        },
+        "absent_headers": [
+          "idempotency-key"
+        ]
+      },
+      "response": {
+        "status": 400,
+        "body": {
+          "error": {
+            "code": "invalid_attachment_content_type",
+            "message": "attachments[0] has an invalid content type"
+          }
+        }
+      },
+      "expect_error": {
+        "kind": "api",
+        "status": 400,
+        "code": "invalid_attachment_content_type",
+        "message": "attachments[0] has an invalid content type",
+        "retry_after": null
+      }
+    },
+    {
+      "name": "error_quota_exceeded",
+      "operation": "send",
+      "input": {
+        "from": "noreply@example.com",
+        "to": "user@example.com",
+        "subject": "Reset your password",
+        "html": "<p>Hi</p>"
+      },
+      "expect_request": {
+        "method": "POST",
+        "path": "/v1/send",
+        "body": {
+          "from": "noreply@example.com",
+          "to": "user@example.com",
+          "subject": "Reset your password",
+          "html": "<p>Hi</p>"
+        },
+        "absent_headers": [
+          "idempotency-key"
+        ]
+      },
+      "response": {
+        "status": 429,
+        "body": {
+          "error": {
+            "code": "quota_exceeded",
+            "message": "monthly quota exceeded"
+          }
+        }
+      },
+      "expect_error": {
+        "kind": "api",
+        "status": 429,
+        "code": "quota_exceeded",
+        "message": "monthly quota exceeded",
+        "retry_after": null
+      }
+    },
+    {
+      "name": "error_quota_exceeded_with_retry_after",
+      "operation": "send",
+      "input": {
+        "from": "noreply@example.com",
+        "to": "user@example.com",
+        "subject": "Reset your password",
+        "html": "<p>Hi</p>"
+      },
+      "expect_request": {
+        "method": "POST",
+        "path": "/v1/send",
+        "body": {
+          "from": "noreply@example.com",
+          "to": "user@example.com",
+          "subject": "Reset your password",
+          "html": "<p>Hi</p>"
+        },
+        "absent_headers": [
+          "idempotency-key"
+        ]
+      },
+      "response": {
+        "status": 429,
+        "body": {
+          "error": {
+            "code": "quota_exceeded",
+            "message": "monthly quota exceeded"
+          }
+        },
+        "headers": {
+          "Retry-After": "3600"
+        }
+      },
+      "expect_error": {
+        "kind": "api",
+        "status": 429,
+        "code": "quota_exceeded",
+        "message": "monthly quota exceeded",
+        "retry_after": 3600
+      }
+    },
+    {
+      "name": "error_spending_cap_reached",
+      "operation": "send",
+      "input": {
+        "from": "noreply@example.com",
+        "to": "user@example.com",
+        "subject": "Reset your password",
+        "html": "<p>Hi</p>"
+      },
+      "expect_request": {
+        "method": "POST",
+        "path": "/v1/send",
+        "body": {
+          "from": "noreply@example.com",
+          "to": "user@example.com",
+          "subject": "Reset your password",
+          "html": "<p>Hi</p>"
+        },
+        "absent_headers": [
+          "idempotency-key"
+        ]
+      },
+      "response": {
+        "status": 429,
+        "body": {
+          "error": {
+            "code": "spending_cap_reached",
+            "message": "workspace monthly spending cap reached"
+          }
+        }
+      },
+      "expect_error": {
+        "kind": "api",
+        "status": 429,
+        "code": "spending_cap_reached",
+        "message": "workspace monthly spending cap reached",
+        "retry_after": null
+      }
+    },
+    {
+      "name": "error_rate_limit_exceeded",
+      "operation": "send",
+      "input": {
+        "from": "noreply@example.com",
+        "to": "user@example.com",
+        "subject": "Reset your password",
+        "html": "<p>Hi</p>"
+      },
+      "expect_request": {
+        "method": "POST",
+        "path": "/v1/send",
+        "body": {
+          "from": "noreply@example.com",
+          "to": "user@example.com",
+          "subject": "Reset your password",
+          "html": "<p>Hi</p>"
+        },
+        "absent_headers": [
+          "idempotency-key"
+        ]
+      },
+      "response": {
+        "status": 429,
+        "body": {
+          "error": {
+            "code": "rate_limit_exceeded",
+            "message": "per-domain send rate limit exceeded"
+          }
+        }
+      },
+      "expect_error": {
+        "kind": "api",
+        "status": 429,
+        "code": "rate_limit_exceeded",
+        "message": "per-domain send rate limit exceeded",
+        "retry_after": null
+      }
+    },
+    {
+      "name": "error_warmup_limit_exceeded",
+      "operation": "send",
+      "input": {
+        "from": "noreply@example.com",
+        "to": "user@example.com",
+        "subject": "Reset your password",
+        "html": "<p>Hi</p>"
+      },
+      "expect_request": {
+        "method": "POST",
+        "path": "/v1/send",
+        "body": {
+          "from": "noreply@example.com",
+          "to": "user@example.com",
+          "subject": "Reset your password",
+          "html": "<p>Hi</p>"
+        },
+        "absent_headers": [
+          "idempotency-key"
+        ]
+      },
+      "response": {
+        "status": 429,
+        "body": {
+          "error": {
+            "code": "warmup_limit_exceeded",
+            "message": "dedicated IP warmup limit reached"
+          }
+        }
+      },
+      "expect_error": {
+        "kind": "api",
+        "status": 429,
+        "code": "warmup_limit_exceeded",
+        "message": "dedicated IP warmup limit reached",
+        "retry_after": null
+      }
+    },
+    {
+      "name": "error_rate_limited_header_and_body",
+      "operation": "send",
+      "input": {
+        "from": "noreply@example.com",
+        "to": "user@example.com",
+        "subject": "Reset your password",
+        "html": "<p>Hi</p>"
+      },
+      "expect_request": {
+        "method": "POST",
+        "path": "/v1/send",
+        "body": {
+          "from": "noreply@example.com",
+          "to": "user@example.com",
+          "subject": "Reset your password",
+          "html": "<p>Hi</p>"
+        },
+        "absent_headers": [
+          "idempotency-key"
+        ]
+      },
+      "response": {
+        "status": 429,
+        "body": {
+          "error": {
+            "code": "rate_limited",
+            "message": "Too many requests. Please try again later.",
+            "retry_after_secs": 42
+          }
+        },
+        "headers": {
+          "Retry-After": "42"
+        }
+      },
+      "expect_error": {
+        "kind": "api",
+        "status": 429,
+        "code": "rate_limited",
+        "message": "Too many requests. Please try again later.",
+        "retry_after": 42
+      }
+    },
+    {
+      "name": "error_rate_limited_body_only",
+      "operation": "send",
+      "input": {
+        "from": "noreply@example.com",
+        "to": "user@example.com",
+        "subject": "Reset your password",
+        "html": "<p>Hi</p>"
+      },
+      "expect_request": {
+        "method": "POST",
+        "path": "/v1/send",
+        "body": {
+          "from": "noreply@example.com",
+          "to": "user@example.com",
+          "subject": "Reset your password",
+          "html": "<p>Hi</p>"
+        },
+        "absent_headers": [
+          "idempotency-key"
+        ]
+      },
+      "response": {
+        "status": 429,
+        "body": {
+          "error": {
+            "code": "rate_limited",
+            "message": "Too many requests. Please try again later.",
+            "retry_after_secs": 17
+          }
+        }
+      },
+      "expect_error": {
+        "kind": "api",
+        "status": 429,
+        "code": "rate_limited",
+        "message": "Too many requests. Please try again later.",
+        "retry_after": 17
+      }
+    },
+    {
+      "name": "error_rate_limited_header_wins_over_body",
+      "operation": "send",
+      "input": {
+        "from": "noreply@example.com",
+        "to": "user@example.com",
+        "subject": "Reset your password",
+        "html": "<p>Hi</p>"
+      },
+      "expect_request": {
+        "method": "POST",
+        "path": "/v1/send",
+        "body": {
+          "from": "noreply@example.com",
+          "to": "user@example.com",
+          "subject": "Reset your password",
+          "html": "<p>Hi</p>"
+        },
+        "absent_headers": [
+          "idempotency-key"
+        ]
+      },
+      "response": {
+        "status": 429,
+        "body": {
+          "error": {
+            "code": "rate_limited",
+            "message": "Too many requests. Please try again later.",
+            "retry_after_secs": 42
+          }
+        },
+        "headers": {
+          "Retry-After": "7"
+        }
+      },
+      "expect_error": {
+        "kind": "api",
+        "status": 429,
+        "code": "rate_limited",
+        "message": "Too many requests. Please try again later.",
+        "retry_after": 7
+      }
+    },
+    {
+      "name": "error_rate_limited_unparseable_retry_after",
+      "operation": "send",
+      "input": {
+        "from": "noreply@example.com",
+        "to": "user@example.com",
+        "subject": "Reset your password",
+        "html": "<p>Hi</p>"
+      },
+      "expect_request": {
+        "method": "POST",
+        "path": "/v1/send",
+        "body": {
+          "from": "noreply@example.com",
+          "to": "user@example.com",
+          "subject": "Reset your password",
+          "html": "<p>Hi</p>"
+        },
+        "absent_headers": [
+          "idempotency-key"
+        ]
+      },
+      "response": {
+        "status": 429,
+        "body": {
+          "error": {
+            "code": "rate_limited",
+            "message": "Too many requests. Please try again later."
+          }
+        },
+        "headers": {
+          "Retry-After": "Wed, 21 Oct 2026 07:28:00 GMT"
+        }
+      },
+      "expect_error": {
+        "kind": "api",
+        "status": 429,
+        "code": "rate_limited",
+        "message": "Too many requests. Please try again later.",
+        "retry_after": null
+      }
+    },
+    {
+      "name": "error_draining",
+      "operation": "send",
+      "input": {
+        "from": "noreply@example.com",
+        "to": "user@example.com",
+        "subject": "Reset your password",
+        "html": "<p>Hi</p>"
+      },
+      "expect_request": {
+        "method": "POST",
+        "path": "/v1/send",
+        "body": {
+          "from": "noreply@example.com",
+          "to": "user@example.com",
+          "subject": "Reset your password",
+          "html": "<p>Hi</p>"
+        },
+        "absent_headers": [
+          "idempotency-key"
+        ]
+      },
+      "response": {
+        "status": 503,
+        "body": {
+          "error": {
+            "code": "draining",
+            "message": "server is draining for deploy; retry shortly"
+          }
+        }
+      },
+      "expect_error": {
+        "kind": "api",
+        "status": 503,
+        "code": "draining",
+        "message": "server is draining for deploy; retry shortly",
+        "retry_after": null
+      }
+    },
+    {
+      "name": "error_queue_at_capacity",
+      "operation": "send",
+      "input": {
+        "from": "noreply@example.com",
+        "to": "user@example.com",
+        "subject": "Reset your password",
+        "html": "<p>Hi</p>"
+      },
+      "expect_request": {
+        "method": "POST",
+        "path": "/v1/send",
+        "body": {
+          "from": "noreply@example.com",
+          "to": "user@example.com",
+          "subject": "Reset your password",
+          "html": "<p>Hi</p>"
+        },
+        "absent_headers": [
+          "idempotency-key"
+        ]
+      },
+      "response": {
+        "status": 503,
+        "body": {
+          "error": {
+            "code": "queue_at_capacity",
+            "message": "delivery queue is at capacity; try again shortly"
+          }
+        }
+      },
+      "expect_error": {
+        "kind": "api",
+        "status": 503,
+        "code": "queue_at_capacity",
+        "message": "delivery queue is at capacity; try again shortly",
+        "retry_after": null
+      }
+    },
+    {
+      "name": "error_internal",
+      "operation": "send",
+      "input": {
+        "from": "noreply@example.com",
+        "to": "user@example.com",
+        "subject": "Reset your password",
+        "html": "<p>Hi</p>"
+      },
+      "expect_request": {
+        "method": "POST",
+        "path": "/v1/send",
+        "body": {
+          "from": "noreply@example.com",
+          "to": "user@example.com",
+          "subject": "Reset your password",
+          "html": "<p>Hi</p>"
+        },
+        "absent_headers": [
+          "idempotency-key"
+        ]
+      },
+      "response": {
+        "status": 500,
+        "body": {
+          "error": {
+            "code": "internal",
+            "message": "internal error"
+          }
+        }
+      },
+      "expect_error": {
+        "kind": "api",
+        "status": 500,
+        "code": "internal",
+        "message": "internal error",
+        "retry_after": null
+      }
+    },
+    {
+      "name": "error_future_code_passes_through",
+      "operation": "send",
+      "input": {
+        "from": "noreply@example.com",
+        "to": "user@example.com",
+        "subject": "Reset your password",
+        "html": "<p>Hi</p>"
+      },
+      "expect_request": {
+        "method": "POST",
+        "path": "/v1/send",
+        "body": {
+          "from": "noreply@example.com",
+          "to": "user@example.com",
+          "subject": "Reset your password",
+          "html": "<p>Hi</p>"
+        },
+        "absent_headers": [
+          "idempotency-key"
+        ]
+      },
+      "response": {
+        "status": 400,
+        "body": {
+          "error": {
+            "code": "some_future_code",
+            "message": "A code this SDK does not know yet"
+          }
+        }
+      },
+      "expect_error": {
+        "kind": "api",
+        "status": 400,
+        "code": "some_future_code",
+        "message": "A code this SDK does not know yet",
+        "retry_after": null
+      }
+    },
+    {
+      "name": "error_non_json_body",
+      "operation": "send",
+      "input": {
+        "from": "noreply@example.com",
+        "to": "user@example.com",
+        "subject": "Reset your password",
+        "html": "<p>Hi</p>"
+      },
+      "expect_request": {
+        "method": "POST",
+        "path": "/v1/send",
+        "body": {
+          "from": "noreply@example.com",
+          "to": "user@example.com",
+          "subject": "Reset your password",
+          "html": "<p>Hi</p>"
+        },
+        "absent_headers": [
+          "idempotency-key"
+        ]
+      },
+      "response": {
+        "status": 502,
+        "body_text": "<html><body>Bad Gateway</body></html>",
+        "headers": {
+          "Content-Type": "text/html"
+        }
+      },
+      "expect_error": {
+        "kind": "api",
+        "status": 502,
+        "code": "unknown_error",
+        "message": "HTTP 502",
+        "retry_after": null
+      }
+    },
+    {
+      "name": "error_json_without_envelope",
+      "operation": "send",
+      "input": {
+        "from": "noreply@example.com",
+        "to": "user@example.com",
+        "subject": "Reset your password",
+        "html": "<p>Hi</p>"
+      },
+      "expect_request": {
+        "method": "POST",
+        "path": "/v1/send",
+        "body": {
+          "from": "noreply@example.com",
+          "to": "user@example.com",
+          "subject": "Reset your password",
+          "html": "<p>Hi</p>"
+        },
+        "absent_headers": [
+          "idempotency-key"
+        ]
+      },
+      "response": {
+        "status": 500,
+        "body": {
+          "detail": "nope"
+        }
+      },
+      "expect_error": {
+        "kind": "api",
+        "status": 500,
+        "code": "unknown_error",
+        "message": "HTTP 500",
+        "retry_after": null
+      }
+    },
+    {
+      "name": "get_email_delivered",
+      "operation": "get_email",
+      "input": {
+        "id": "550e8400-e29b-41d4-a716-446655440000"
+      },
+      "expect_request": {
+        "method": "GET",
+        "path": "/v1/emails/550e8400-e29b-41d4-a716-446655440000"
+      },
+      "response": {
+        "status": 200,
+        "body": {
+          "id": "550e8400-e29b-41d4-a716-446655440000",
+          "status": "delivered",
+          "summary": "Blindrelay delivered the message.",
+          "final": true,
+          "accepted_at": null,
+          "updated_at": "2026-06-29T10:15:02Z",
+          "lookup_window_hours": 72,
+          "sandbox": false
+        }
+      },
+      "expect_result": {
+        "id": "550e8400-e29b-41d4-a716-446655440000",
+        "status": "delivered",
+        "summary": "Blindrelay delivered the message.",
+        "final": true,
+        "accepted_at": null,
+        "updated_at": "2026-06-29T10:15:02Z",
+        "lookup_window_hours": 72,
+        "sandbox": false
+      }
+    },
+    {
+      "name": "get_email_in_flight_sandbox",
+      "operation": "get_email",
+      "input": {
+        "id": "550e8400-e29b-41d4-a716-446655440000"
+      },
+      "expect_request": {
+        "method": "GET",
+        "path": "/v1/emails/550e8400-e29b-41d4-a716-446655440000"
+      },
+      "response": {
+        "status": 200,
+        "body": {
+          "id": "550e8400-e29b-41d4-a716-446655440000",
+          "status": "queued",
+          "summary": "Waiting for delivery.",
+          "final": false,
+          "accepted_at": "2026-06-29T10:15:00Z",
+          "updated_at": "2026-06-29T10:15:02Z",
+          "lookup_window_hours": 72,
+          "sandbox": true,
+          "some_future_field": 1
+        }
+      },
+      "expect_result": {
+        "id": "550e8400-e29b-41d4-a716-446655440000",
+        "status": "queued",
+        "summary": "Waiting for delivery.",
+        "final": false,
+        "accepted_at": "2026-06-29T10:15:00Z",
+        "updated_at": "2026-06-29T10:15:02Z",
+        "lookup_window_hours": 72,
+        "sandbox": true
+      }
+    },
+    {
+      "name": "get_email_future_status_passes_through",
+      "operation": "get_email",
+      "input": {
+        "id": "550e8400-e29b-41d4-a716-446655440000"
+      },
+      "expect_request": {
+        "method": "GET",
+        "path": "/v1/emails/550e8400-e29b-41d4-a716-446655440000"
+      },
+      "response": {
+        "status": 200,
+        "body": {
+          "id": "550e8400-e29b-41d4-a716-446655440000",
+          "status": "some_future_status",
+          "summary": "Blindrelay delivered the message.",
+          "final": true,
+          "accepted_at": null,
+          "updated_at": "2026-06-29T10:15:02Z",
+          "lookup_window_hours": 72,
+          "sandbox": false
+        }
+      },
+      "expect_result": {
+        "id": "550e8400-e29b-41d4-a716-446655440000",
+        "status": "some_future_status",
+        "summary": "Blindrelay delivered the message.",
+        "final": true,
+        "accepted_at": null,
+        "updated_at": "2026-06-29T10:15:02Z",
+        "lookup_window_hours": 72,
+        "sandbox": false
+      }
+    },
+    {
+      "name": "get_email_id_is_path_encoded",
+      "operation": "get_email",
+      "input": {
+        "id": "a/b c"
+      },
+      "expect_request": {
+        "method": "GET",
+        "path": "/v1/emails/a%2Fb%20c"
+      },
+      "response": {
+        "status": 200,
+        "body": {
+          "id": "550e8400-e29b-41d4-a716-446655440000",
+          "status": "delivered",
+          "summary": "Blindrelay delivered the message.",
+          "final": true,
+          "accepted_at": null,
+          "updated_at": "2026-06-29T10:15:02Z",
+          "lookup_window_hours": 72,
+          "sandbox": false
+        }
+      },
+      "expect_result": {
+        "id": "550e8400-e29b-41d4-a716-446655440000",
+        "status": "delivered",
+        "summary": "Blindrelay delivered the message.",
+        "final": true,
+        "accepted_at": null,
+        "updated_at": "2026-06-29T10:15:02Z",
+        "lookup_window_hours": 72,
+        "sandbox": false
+      }
+    },
+    {
+      "name": "get_email_not_found",
+      "operation": "get_email",
+      "input": {
+        "id": "550e8400-e29b-41d4-a716-446655440000"
+      },
+      "expect_request": {
+        "method": "GET",
+        "path": "/v1/emails/550e8400-e29b-41d4-a716-446655440000"
+      },
+      "response": {
+        "status": 404,
+        "body": {
+          "error": {
+            "code": "email_not_found",
+            "message": "No message with this id in this workspace, or it is older than the 72-hour lookup window.",
+            "lookup_window_hours": 72
+          }
+        }
+      },
+      "expect_error": {
+        "kind": "api",
+        "status": 404,
+        "code": "email_not_found",
+        "message": "No message with this id in this workspace, or it is older than the 72-hour lookup window.",
+        "retry_after": null
+      }
+    },
+    {
+      "name": "list_emails_no_filters",
+      "operation": "list_emails",
+      "input": {},
+      "expect_request": {
+        "method": "GET",
+        "path": "/v1/emails",
+        "query": {}
+      },
+      "response": {
+        "status": 200,
+        "body": {
+          "emails": [
+            {
+              "id": "6ba7b810-9dad-41d1-80b4-00c04fd430c8",
+              "status": "queued",
+              "summary": "Waiting for delivery.",
+              "final": false,
+              "domain": null,
+              "api_key_id": null,
+              "accepted_at": null,
+              "updated_at": "2026-06-29T10:16:00Z",
+              "sandbox": true
+            }
+          ],
+          "next_cursor": null,
+          "lookup_window_hours": 72
+        }
+      },
+      "expect_result": {
+        "emails": [
+          {
+            "id": "6ba7b810-9dad-41d1-80b4-00c04fd430c8",
+            "status": "queued",
+            "summary": "Waiting for delivery.",
+            "final": false,
+            "domain": null,
+            "api_key_id": null,
+            "accepted_at": null,
+            "updated_at": "2026-06-29T10:16:00Z",
+            "sandbox": true
+          }
+        ],
+        "next_cursor": null,
+        "lookup_window_hours": 72
+      }
+    },
+    {
+      "name": "list_emails_all_filters",
+      "operation": "list_emails",
+      "input": {
+        "status": "delivered",
+        "domain": "example.com",
+        "page_size": 25,
+        "cursor": "abc"
+      },
+      "expect_request": {
+        "method": "GET",
+        "path": "/v1/emails",
+        "query": {
+          "status": "delivered",
+          "domain": "example.com",
+          "page_size": "25",
+          "cursor": "abc"
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": {
+          "emails": [
+            {
+              "id": "550e8400-e29b-41d4-a716-446655440000",
+              "status": "delivered",
+              "summary": "Blindrelay delivered the message.",
+              "final": true,
+              "domain": "example.com",
+              "api_key_id": "0b7e2a51-8d3c-4a55-b3c4-6f1e9d2c7a88",
+              "accepted_at": "2026-06-29T10:15:00Z",
+              "updated_at": "2026-06-29T10:15:02Z",
+              "sandbox": false
+            }
+          ],
+          "next_cursor": "MTcwMDAwMDAwMDEyMzQ1Nl9hYmM",
+          "lookup_window_hours": 72
+        }
+      },
+      "expect_result": {
+        "emails": [
+          {
+            "id": "550e8400-e29b-41d4-a716-446655440000",
+            "status": "delivered",
+            "summary": "Blindrelay delivered the message.",
+            "final": true,
+            "domain": "example.com",
+            "api_key_id": "0b7e2a51-8d3c-4a55-b3c4-6f1e9d2c7a88",
+            "accepted_at": "2026-06-29T10:15:00Z",
+            "updated_at": "2026-06-29T10:15:02Z",
+            "sandbox": false
+          }
+        ],
+        "next_cursor": "MTcwMDAwMDAwMDEyMzQ1Nl9hYmM",
+        "lookup_window_hours": 72
+      }
+    },
+    {
+      "name": "list_emails_cursor_is_query_encoded",
+      "operation": "list_emails",
+      "input": {
+        "cursor": "a+b/c=d&e f"
+      },
+      "expect_request": {
+        "method": "GET",
+        "path": "/v1/emails",
+        "query": {
+          "cursor": "a+b/c=d&e f"
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": {
+          "emails": [
+            {
+              "id": "6ba7b810-9dad-41d1-80b4-00c04fd430c8",
+              "status": "queued",
+              "summary": "Waiting for delivery.",
+              "final": false,
+              "domain": null,
+              "api_key_id": null,
+              "accepted_at": null,
+              "updated_at": "2026-06-29T10:16:00Z",
+              "sandbox": true
+            }
+          ],
+          "next_cursor": null,
+          "lookup_window_hours": 72
+        }
+      },
+      "expect_result": {
+        "emails": [
+          {
+            "id": "6ba7b810-9dad-41d1-80b4-00c04fd430c8",
+            "status": "queued",
+            "summary": "Waiting for delivery.",
+            "final": false,
+            "domain": null,
+            "api_key_id": null,
+            "accepted_at": null,
+            "updated_at": "2026-06-29T10:16:00Z",
+            "sandbox": true
+          }
+        ],
+        "next_cursor": null,
+        "lookup_window_hours": 72
+      }
+    },
+    {
+      "name": "list_emails_paging_first_page",
+      "operation": "list_emails",
+      "input": {
+        "page_size": 1
+      },
+      "expect_request": {
+        "method": "GET",
+        "path": "/v1/emails",
+        "query": {
+          "page_size": "1"
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": {
+          "emails": [
+            {
+              "id": "550e8400-e29b-41d4-a716-446655440000",
+              "status": "delivered",
+              "summary": "Blindrelay delivered the message.",
+              "final": true,
+              "domain": "example.com",
+              "api_key_id": "0b7e2a51-8d3c-4a55-b3c4-6f1e9d2c7a88",
+              "accepted_at": "2026-06-29T10:15:00Z",
+              "updated_at": "2026-06-29T10:15:02Z",
+              "sandbox": false
+            }
+          ],
+          "next_cursor": "MTcwMDAwMDAwMDEyMzQ1Nl9hYmM",
+          "lookup_window_hours": 72
+        }
+      },
+      "expect_result": {
+        "emails": [
+          {
+            "id": "550e8400-e29b-41d4-a716-446655440000",
+            "status": "delivered",
+            "summary": "Blindrelay delivered the message.",
+            "final": true,
+            "domain": "example.com",
+            "api_key_id": "0b7e2a51-8d3c-4a55-b3c4-6f1e9d2c7a88",
+            "accepted_at": "2026-06-29T10:15:00Z",
+            "updated_at": "2026-06-29T10:15:02Z",
+            "sandbox": false
+          }
+        ],
+        "next_cursor": "MTcwMDAwMDAwMDEyMzQ1Nl9hYmM",
+        "lookup_window_hours": 72
+      }
+    },
+    {
+      "name": "list_emails_paging_second_page",
+      "operation": "list_emails",
+      "input": {
+        "page_size": 1,
+        "cursor": "MTcwMDAwMDAwMDEyMzQ1Nl9hYmM"
+      },
+      "expect_request": {
+        "method": "GET",
+        "path": "/v1/emails",
+        "query": {
+          "page_size": "1",
+          "cursor": "MTcwMDAwMDAwMDEyMzQ1Nl9hYmM"
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": {
+          "emails": [
+            {
+              "id": "6ba7b810-9dad-41d1-80b4-00c04fd430c8",
+              "status": "queued",
+              "summary": "Waiting for delivery.",
+              "final": false,
+              "domain": null,
+              "api_key_id": null,
+              "accepted_at": null,
+              "updated_at": "2026-06-29T10:16:00Z",
+              "sandbox": true
+            }
+          ],
+          "next_cursor": null,
+          "lookup_window_hours": 72
+        }
+      },
+      "expect_result": {
+        "emails": [
+          {
+            "id": "6ba7b810-9dad-41d1-80b4-00c04fd430c8",
+            "status": "queued",
+            "summary": "Waiting for delivery.",
+            "final": false,
+            "domain": null,
+            "api_key_id": null,
+            "accepted_at": null,
+            "updated_at": "2026-06-29T10:16:00Z",
+            "sandbox": true
+          }
+        ],
+        "next_cursor": null,
+        "lookup_window_hours": 72
+      }
+    },
+    {
+      "name": "list_emails_empty_page",
+      "operation": "list_emails",
+      "input": {},
+      "expect_request": {
+        "method": "GET",
+        "path": "/v1/emails",
+        "query": {}
+      },
+      "response": {
+        "status": 200,
+        "body": {
+          "emails": [],
+          "next_cursor": null,
+          "lookup_window_hours": 72
+        }
+      },
+      "expect_result": {
+        "emails": [],
+        "next_cursor": null,
+        "lookup_window_hours": 72
+      }
+    },
+    {
+      "name": "list_emails_invalid_status",
+      "operation": "list_emails",
+      "input": {
+        "status": "x"
+      },
+      "expect_request": {
+        "method": "GET",
+        "path": "/v1/emails",
+        "query": {
+          "status": "x"
+        }
+      },
+      "response": {
+        "status": 400,
+        "body": {
+          "error": {
+            "code": "invalid_status",
+            "message": "Unknown message status."
+          }
+        }
+      },
+      "expect_error": {
+        "kind": "api",
+        "status": 400,
+        "code": "invalid_status",
+        "message": "Unknown message status.",
+        "retry_after": null
+      }
+    },
+    {
+      "name": "list_emails_invalid_domain",
+      "operation": "list_emails",
+      "input": {
+        "domain": "x"
+      },
+      "expect_request": {
+        "method": "GET",
+        "path": "/v1/emails",
+        "query": {
+          "domain": "x"
+        }
+      },
+      "response": {
+        "status": 400,
+        "body": {
+          "error": {
+            "code": "invalid_domain",
+            "message": "Enter a sending domain."
+          }
+        }
+      },
+      "expect_error": {
+        "kind": "api",
+        "status": 400,
+        "code": "invalid_domain",
+        "message": "Enter a sending domain.",
+        "retry_after": null
+      }
+    },
+    {
+      "name": "list_emails_invalid_cursor",
+      "operation": "list_emails",
+      "input": {
+        "cursor": "x"
+      },
+      "expect_request": {
+        "method": "GET",
+        "path": "/v1/emails",
+        "query": {
+          "cursor": "x"
+        }
+      },
+      "response": {
+        "status": 400,
+        "body": {
+          "error": {
+            "code": "invalid_cursor",
+            "message": "Use the next_cursor value from a list response."
+          }
+        }
+      },
+      "expect_error": {
+        "kind": "api",
+        "status": 400,
+        "code": "invalid_cursor",
+        "message": "Use the next_cursor value from a list response.",
+        "retry_after": null
+      }
+    },
+    {
+      "name": "list_emails_rate_limited",
+      "operation": "list_emails",
+      "input": {},
+      "expect_request": {
+        "method": "GET",
+        "path": "/v1/emails",
+        "query": {}
+      },
+      "response": {
+        "status": 429,
+        "headers": {
+          "Retry-After": "30"
+        },
+        "body": {
+          "error": {
+            "code": "rate_limited",
+            "message": "Too many requests. Please try again later.",
+            "retry_after_secs": 30
+          }
+        }
+      },
+      "expect_error": {
+        "kind": "api",
+        "status": 429,
+        "code": "rate_limited",
+        "message": "Too many requests. Please try again later.",
+        "retry_after": 30
+      }
+    },
+    {
+      "name": "transport_timeout",
+      "operation": "get_email",
+      "input": {
+        "id": "550e8400-e29b-41d4-a716-446655440000"
+      },
+      "client": {
+        "timeout_ms": 200
+      },
+      "expect_request": {
+        "method": "GET",
+        "path": "/v1/emails/550e8400-e29b-41d4-a716-446655440000"
+      },
+      "response": {
+        "status": 200,
+        "delay_ms": 2000,
+        "body": {
+          "id": "550e8400-e29b-41d4-a716-446655440000",
+          "status": "delivered",
+          "summary": "Blindrelay delivered the message.",
+          "final": true,
+          "accepted_at": null,
+          "updated_at": "2026-06-29T10:15:02Z",
+          "lookup_window_hours": 72,
+          "sandbox": false
+        }
+      },
+      "expect_error": {
+        "kind": "timeout"
+      }
+    },
+    {
+      "name": "transport_connection_refused",
+      "operation": "get_email",
+      "input": {
+        "id": "550e8400-e29b-41d4-a716-446655440000"
+      },
+      "client": {
+        "no_server": true
+      },
+      "expect_error": {
+        "kind": "connection"
+      }
+    }
+  ]
+}

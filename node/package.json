@@ -1,0 +1,44 @@
+{
+  "name": "blindrelay",
+  "version": "0.1.0",
+  "description": "Official Node.js and TypeScript SDK for the Blindrelay transactional email API.",
+  "license": "MIT",
+  "homepage": "https://blindrelay.app",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/blindrelay-app/sdks.git",
+    "directory": "node"
+  },
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "files": ["dist", "LICENSE"],
+  "engines": {
+    "node": ">=20.19"
+  },
+  "scripts": {
+    "build": "tsc",
+    "test": "tsc && node --test tests/*.test.mjs"
+  },
+  "peerDependencies": {
+    "@react-email/render": ">=1.0.0"
+  },
+  "peerDependenciesMeta": {
+    "@react-email/render": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "@react-email/render": "2.2.0",
+    "@types/node": "22.20.5",
+    "react": "19.3.1",
+    "react-dom": "19.3.1",
+    "typescript": "5.9.3"
+  }
+}
