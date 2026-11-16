@@ -2,7 +2,7 @@
 
 Thin official SDKs for the Blindrelay machine API in eight languages. They share one conformance suite so their behaviour cannot drift. The API reference is [openapi.yaml](https://blindrelay.app/openapi.yaml).
 
-Node and Python install from npm and PyPI. The other SDKs are not published yet; each README says what to expect. Their manifests are guarded against an accidental upload where the ecosystem allows it. MIT licensed.
+Node installs from npm as [`@blindrelay/sdk`](https://www.npmjs.com/package/@blindrelay/sdk). Python is not on PyPI yet, and neither are the other SDKs; each README says what to expect. Their manifests are guarded against an accidental upload where the ecosystem allows it. MIT licensed.
 
 ## Coverage
 

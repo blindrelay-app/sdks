@@ -1,11 +1,11 @@
 # Blindrelay SDK for Node.js and TypeScript
 
-`npm install blindrelay`. Needs Node 20.19+; ESM only.
+`npm install @blindrelay/sdk`. Needs Node 20.19+; ESM only.
 
 ## Send
 
 ```ts
-import { Blindrelay } from 'blindrelay'
+import { Blindrelay } from '@blindrelay/sdk'
 
 const client = new Blindrelay(process.env.BLINDRELAY_API_KEY!)
 
@@ -57,7 +57,7 @@ API failures throw `BlindrelayApiError` with `status`, `code`, `message` and `re
 Use the raw body, before any JSON parsing:
 
 ```ts
-import { verifyWebhook } from 'blindrelay'
+import { verifyWebhook } from '@blindrelay/sdk'
 
 const ok = verifyWebhook({
   payload: rawBodyBuffer,
