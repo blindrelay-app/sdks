@@ -24,6 +24,10 @@ console.log(result.id, result.status)
 
 Options: `new Blindrelay(key, { baseUrl, timeoutMs })`. Attachments: `attachmentFromBytes('report.pdf', 'application/pdf', bytes)`.
 
+## Testing without sending
+
+Use a sandbox API key (dashboard, API Keys, **Sandbox key**): the same calls are accepted and fire your webhooks, but nothing is delivered and no quota is used. Send to `hard_bounce@sandbox.blindrelay.app` or `soft_bounce@sandbox.blindrelay.app` to get a bounce.
+
 ## React Email
 
 Install the optional peer, then pass an element as `react` instead of `html`:

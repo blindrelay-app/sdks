@@ -23,6 +23,10 @@ Every SDK covers: client construction (API key, base URL, timeout), `send`, `get
 
 The webhook helpers verify delivery webhooks (`Blindrelay-Signature` over `<t>.<delivery_id>.` + raw body). Inbound endpoint deliveries sign a different string and are not covered.
 
+## Testing without sending
+
+Create a sandbox API key in the dashboard (API Keys, tick **Sandbox key**) and pass it to any SDK. Sends are accepted, get a status and fire your webhooks, but nothing is delivered and no quota is used. The sending domain must still be verified. `hard_bounce@sandbox.blindrelay.app` and `soft_bounce@sandbox.blindrelay.app` return those outcomes; every other recipient is reported `delivered`. No SDK code changes between sandbox and live keys.
+
 ## Conformance
 
 `conformance/cases/http.json` holds one case per request/response shape: the request expected on the wire, the canned response, and the expected result or error. `conformance/cases/webhooks.json` holds the signature vectors, starting with the published test vector from `backend/src/domain/delivery/signing.rs`.

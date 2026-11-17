@@ -1,5 +1,5 @@
 [build-system]
-requires = ["setuptools>=68"]
+requires = ["setuptools>=77"]
 build-backend = "setuptools.build_meta"
 
 [project]
@@ -9,8 +9,8 @@ description = "Official Python SDK for the Blindrelay transactional email API."
 readme = "README.md"
 requires-python = ">=3.9"
 dependencies = []
-license = { text = "MIT" }
-classifiers = ["License :: OSI Approved :: MIT License"]
+license = "MIT"
+license-files = ["LICENSE"]
 
 [project.urls]
 Homepage = "https://blindrelay.app"

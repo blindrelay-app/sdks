@@ -9,7 +9,6 @@
 set -uo pipefail
 
 sdks_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-repo_dir="$(dirname "$sdks_dir")"
 scratch_dir="${BLINDRELAY_SDK_TEST_DIR:-$sdks_dir/.test-output}"
 log_dir="$scratch_dir/logs"
 cache_dir="$scratch_dir/cache"
